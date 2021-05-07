@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Produits</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+ <!-- Brand -->
+ <a class="navbar-brand" href="ListeMembres">Gestion Membres</a>
+ <!-- Links -->
+ <ul class="navbar-nav">
+ <li class="nav-item">
+ <a class="nav-link" th:href="@{listeMembres}" >Home</a>
+ </li>
+ <!-- Dropdown -->
+ <li class="nav-item dropdown">
+ <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+ Produits
+ </a>
+ <div class="dropdown-menu">
+ <a class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
+ <a class="dropdown-item" th:href="@{listeMembres}">Lister</a>
+ </div>
+ </li>
+ </ul>
+ 
+ <ul class="navbar-nav ml-auto" >
+ <li class="nav-item dropdown">
+ <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+Manar Ben Nourreddine
+ </a>
+ <div class="dropdown-menu">
+ <a class="dropdown-item" href="#">login</a>
+ <a class="dropdown-item" href="#">logout</a>
+ <a class="dropdown-item" href="#">Profile</a>
+ </div>
+ </li>
+ </ul>
+</nav>
+<section layout:fragment="Mycontent" >
+</section>
+
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+ <div class="card-header">
+ Liste des Membres
+ </div>
+ <div class="card-body">
+ 
+ <table class="table table-striped">
+ <tr>
+ <th>ID</th><th>Nom Produit</th><th>Prix</th>
+ </tr> 
+
+ <tr th:each="p:${membres.content}">
+ <td th:text="${p.idMembre}"></td>
+ <td th:text="${p.nomMembre}"></td>
+ <td th:text="${p.numMembre}"></td> 
+<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')"
+ th:href="@{supprimerMembre(id=${p.idMembre}, 
+page=${currentPage},size=${size})}">Supprimer</a></td>
+<td><a class="btn btn-success" th:href="@{modifierMembre(id=${p.idMembre})}">Editer</a></td>
+
+
+ </tr> 
+ </table>
+ <ul class="nav nav-pills">
+ <li th:each="page,status:${pages}">
+ <a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+ th:href="@{ listeMembres(page=${status.index}, size=${size} ) }"
+ th:text="${status.index }"></a>
+ </li>
+ </ul>
+ </div>
+</div>
+</div>
+</body>
+</html>
